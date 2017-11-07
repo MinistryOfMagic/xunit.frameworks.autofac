@@ -1,7 +1,7 @@
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Xunit.Ioc.Autofac.TestFramework
+namespace Xunit.Frameworks.Autofac.TestFramework
 {
     internal class AutofacFactDiscoverer : FactDiscoverer
     {

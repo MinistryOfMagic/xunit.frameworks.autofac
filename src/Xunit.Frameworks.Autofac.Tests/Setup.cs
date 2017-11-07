@@ -2,9 +2,9 @@
 using Xunit;
 using Xunit.Abstractions;
 
-[assembly:TestFramework("Xunit.Ioc.Autofac.Tests.TestFramework", "Xunit.Ioc.Autofac.Tests")]
+[assembly:TestFramework("Xunit.Frameworks.Autofac.Tests.TestFramework", "Xunit.Frameworks.Autofac.Tests")]
 
-namespace Xunit.Ioc.Autofac.Tests
+namespace Xunit.Frameworks.Autofac.Tests
 {
     public class TestFramework : AutofacTestFramework
     {

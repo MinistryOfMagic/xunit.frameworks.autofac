@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\xunit2.ioc.autofac\xunit2.ioc.autofac.csproj" />
+    <ProjectReference Include="..\Xunit.Frameworks.Autofac\Xunit.Frameworks.Autofac.csproj" />
   </ItemGroup>
 
 </Project>

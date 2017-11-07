@@ -1,7 +1,7 @@
 using Autofac;
 using Xunit.Sdk;
 
-namespace Xunit.Ioc.Autofac.TestFramework
+namespace Xunit.Frameworks.Autofac.TestFramework
 {
     public class AutofacTest : XunitTest
     {

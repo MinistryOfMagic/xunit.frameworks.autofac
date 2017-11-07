@@ -1,4 +1,4 @@
-﻿namespace Xunit.Ioc.Autofac
+﻿namespace Xunit.Frameworks.Autofac
 {
     public struct AutofacTestScopes
     {

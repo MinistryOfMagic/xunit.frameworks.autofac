@@ -1,14 +1,18 @@
-xUnit Autofac  [![Build Master](https://ci.appveyor.com/api/projects/status/mqvl7dyo0auimouw/branch/master?svg=true)](https://ci.appveyor.com/project/dennisroche/xunit-ioc-autofac) [![NuGet Version](http://img.shields.io/nuget/v/xunit2.ioc.autofac.svg?style=flat)](https://www.nuget.org/packages/xunit2.ioc.autofac/) [![Join the chat at https://gitter.im/xunit-ioc-autofac/Lobby](https://badges.gitter.im/xunit-ioc-autofac/Lobby.svg)](https://gitter.im/xunit-ioc-autofac/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+xUnit Autofac
 ================
 
-Use AutoFac to resolve xUnit test cases.
+Use Autofac to resolve xUnit test cases.
+
+The Test runners and discoverers are based on their xUnit counterparts. If `[UseAutofacTestFramework]` is missing, the tests in that class are run by the normal xUnit runners.
+
+Originally a fork of [xunit.ioc.autofac] by @dennisroche
 
 How to use
 =============
 
-Install the [Nuget](https://www.nuget.org/packages/xunit2.ioc.autofac) package.
+Install the [Nuget](https://www.nuget.org/packages/xunit.frameworks.autofac) package.
 
-    Install-Package xunit2.ioc.autofac
+    Install-Package xunit.frameworks.autofac
 
 In your testing project, add the following framework
 
@@ -96,11 +100,11 @@ public class MyEvenMoreAwesomeTests : IUseInMemoryDb
     private readonly IDbConnectionFactory _dbConnectionFactory;
 }
 
-public interface IUseInMemoryDb : IClassFixture<MemoryDatabaseClassFixture>, INeedModule<MemoryDatabaseFixtureModule>
+public interface IUseInMemoryDb : IClassFixture<MemoryDatabaseClassFixture>
 {
 }
 
-public class MemoryDatabaseClassFixture : IDisposable
+public class MemoryDatabaseClassFixture : IDisposable, INeedModule<MemoryDatabaseClassFixture.MemoryDatabaseFixtureModule>
 {
     private readonly IDbConnection _db;
 
@@ -115,18 +119,18 @@ public class MemoryDatabaseClassFixture : IDisposable
         // Now it can rest in peace
         _db?.Dispose();
     }
-}
 
-public class MemoryDatabaseFixtureModule : Module
-{
-    protected override void Load(ContainerBuilder builder)
+    public class MemoryDatabaseFixtureModule : Module
     {
-        builder.Register(c => new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider)).As<IDbConnectionFactory>().SingleInstance();
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.Register(c => new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider)).As<IDbConnectionFactory>().SingleInstance();
+        }
     }
 }
+
 ```
 
 License
 =============
-
 MIT

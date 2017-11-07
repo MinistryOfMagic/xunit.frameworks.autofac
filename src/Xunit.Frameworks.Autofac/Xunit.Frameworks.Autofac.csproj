@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Using Autofac to resolve dependencies in xUnit2 tests</Description>
-    <AssemblyTitle>xunit2.ioc.autofac</AssemblyTitle>
+    <Description>An xUnit TestFramework that uses Autofac to resolve tests and their dependencies</Description>
+    <AssemblyTitle>xunit.frameworks.autofac</AssemblyTitle>
     <VersionPrefix>0.1.0</VersionPrefix>
-    <Authors>dennisroche</Authors>
+    <Authors>MinistryOfMagic</Authors>
     <TargetFrameworks>netstandard1.6;net452</TargetFrameworks>
-    <AssemblyName>xunit2.ioc.autofac</AssemblyName>
-    <PackageId>xunit2.ioc.autofac</PackageId>
+    <AssemblyName>xunit.frameworks.autofac</AssemblyName>
+    <PackageId>xunit.frameworks.autofac</PackageId>
     <PackageTags>xunit;autofac</PackageTags>
     <PackageLicenseUrl>http://www.opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/dennisroche/xunit.ioc.autofac</RepositoryUrl>
+    <RepositoryUrl>https://github.com/MinistryOfMagic/xunit.frameworks.autofac</RepositoryUrl>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.1</NetStandardImplicitPackageVersion>
-    <RootNamespace>Xunit.Ioc.Autofac</RootNamespace>
+    <RootNamespace>Xunit.Frameworks.Autofac</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

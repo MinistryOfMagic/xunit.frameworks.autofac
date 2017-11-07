@@ -1,6 +1,6 @@
 using System;
 
-namespace Xunit.Ioc.Autofac
+namespace Xunit.Frameworks.Autofac
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class UseAutofacTestFrameworkAttribute : Attribute { }

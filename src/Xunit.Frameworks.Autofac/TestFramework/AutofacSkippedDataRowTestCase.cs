@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Xunit.Ioc.Autofac.TestFramework
+namespace Xunit.Frameworks.Autofac.TestFramework
 {
     internal class AutofacSkippedDataRowTestCase : AutofacTestCase
     {

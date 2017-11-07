@@ -1,7 +1,7 @@
 using Autofac;
 using FluentAssertions;
 
-namespace Xunit.Ioc.Autofac.Tests
+namespace Xunit.Frameworks.Autofac.Tests
 {
     [UseAutofacTestFramework]
     [Collection("Foo")]

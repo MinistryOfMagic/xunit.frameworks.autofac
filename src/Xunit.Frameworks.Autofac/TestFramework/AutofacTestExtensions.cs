@@ -6,7 +6,7 @@ using Autofac;
 using Autofac.Core;
 using Xunit.Abstractions;
 
-namespace Xunit.Ioc.Autofac.TestFramework
+namespace Xunit.Frameworks.Autofac.TestFramework
 {
     internal static class AutofacTestExtensions
     {

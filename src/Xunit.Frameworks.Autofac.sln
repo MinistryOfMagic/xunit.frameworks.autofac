@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xunit2.ioc.autofac", "src\xunit2.ioc.autofac\xunit2.ioc.autofac.csproj", "{3D7BB489-089A-4400-B6AF-CC6CA6930799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xunit.Frameworks.Autofac", "Xunit.Frameworks.Autofac\Xunit.Frameworks.Autofac.csproj", "{3D7BB489-089A-4400-B6AF-CC6CA6930799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xunit.Ioc.Autofac.Tests", "src\Xunit.Ioc.Autofac.Tests\Xunit.Ioc.Autofac.Tests.csproj", "{FE1E43CC-83EA-4A4A-BA6C-BF613EBA110B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xunit.Frameworks.Autofac.Tests", "Xunit.Frameworks.Autofac.Tests\Xunit.Frameworks.Autofac.Tests.csproj", "{FE1E43CC-83EA-4A4A-BA6C-BF613EBA110B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

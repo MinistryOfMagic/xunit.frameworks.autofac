@@ -7,7 +7,7 @@ using Autofac;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Xunit.Ioc.Autofac.TestFramework
+namespace Xunit.Frameworks.Autofac.TestFramework
 {
     public class AutofacTestRunner : XunitTestRunner
     {

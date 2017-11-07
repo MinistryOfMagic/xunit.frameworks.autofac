@@ -2,9 +2,9 @@
 using Autofac;
 using Autofac.Features.ResolveAnything;
 using Xunit.Abstractions;
-using Xunit.Ioc.Autofac.TestFramework;
+using Xunit.Frameworks.Autofac.TestFramework;
 
-namespace Xunit.Ioc.Autofac
+namespace Xunit.Frameworks.Autofac
 {
     public abstract class AutofacTestFramework : Sdk.TestFramework
     {

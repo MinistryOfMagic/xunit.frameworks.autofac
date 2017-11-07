@@ -6,7 +6,7 @@ using Autofac;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Xunit.Ioc.Autofac
+namespace Xunit.Frameworks.Autofac
 {
     public class AutofacTestInvoker : XunitTestInvoker
     {
