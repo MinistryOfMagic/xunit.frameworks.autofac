@@ -17,7 +17,7 @@ namespace Xunit.Frameworks.Autofac.Tests
         private readonly IFoo _foo;
 
         [Fact]
-        public void Collections_work_correcetly()
+        public void Collections_work_correctly()
         {
             _foo.Should().NotBeNull();
             _lifetimeScope.Resolve<FooClassFixture>().Should().NotBeNull();

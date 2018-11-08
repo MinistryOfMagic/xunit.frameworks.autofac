@@ -42,7 +42,7 @@ namespace Xunit.Frameworks.Autofac.TestFramework
             if (factAttributes.Count > 1)
             {
                 var message = $"Test method '{testMethod.TestClass.Class.Name}.{testMethod.Method.Name}' has multiple [Fact]-derived attributes";
-                var testCase = new ExecutionErrorTestCase(DiagnosticMessageSink, TestMethodDisplay.ClassAndMethod, testMethod, message);
+                var testCase = new ExecutionErrorTestCase(DiagnosticMessageSink, TestMethodDisplay.ClassAndMethod, TestMethodDisplayOptions.All, testMethod, message);
                 return ReportDiscoveredTestCase(testCase, includeSourceInformation, messageBus);
             }
 

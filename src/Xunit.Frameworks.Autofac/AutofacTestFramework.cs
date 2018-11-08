@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Features.ResolveAnything;
 using Xunit.Abstractions;
 using Xunit.Frameworks.Autofac.TestFramework;
+using Xunit.Sdk;
 
 namespace Xunit.Frameworks.Autofac
 {
@@ -22,6 +23,7 @@ namespace Xunit.Frameworks.Autofac
             var builder = new ContainerBuilder();
 
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
+            builder.RegisterType<TestOutputHelper>().As<ITestOutputHelper>().AsSelf().InstancePerTest();
 
             ConfigureContainer(builder);
 

@@ -30,12 +30,17 @@ namespace Xunit.Frameworks.Autofac.TestFramework
             _testClassLifetimeScope = testClassLifetimeScope;
         }
 
-        protected override async Task<decimal> InvokeTestMethodAsync(ExceptionAggregator aggregator)
+        protected override async Task<Tuple<decimal, string>> InvokeTestAsync(ExceptionAggregator aggregator)
         {
             using (var testLifetimeScope = _testClassLifetimeScope.BeginLifetimeScope(AutofacTestScopes.Test, builder => builder.RegisterModules(TestClass)))
             {
-                return await new AutofacTestInvoker(testLifetimeScope, Test, MessageBus, TestClass, ConstructorArguments, TestMethod, TestMethodArguments,
-                                                    BeforeAfterAttributes, aggregator, CancellationTokenSource).RunAsync();
+                TestOutputHelper testOutputHelper = testLifetimeScope.Resolve<TestOutputHelper>();
+                testOutputHelper.Initialize(MessageBus, Test);
+                decimal seconds = await new AutofacTestInvoker(testLifetimeScope, Test, MessageBus, TestClass, ConstructorArguments, TestMethod, TestMethodArguments,
+                                                           BeforeAfterAttributes, aggregator, CancellationTokenSource).RunAsync();
+                string output = testOutputHelper.Output;
+                testOutputHelper.Uninitialize();
+                return Tuple.Create(seconds, output);
             }
         }
     }
