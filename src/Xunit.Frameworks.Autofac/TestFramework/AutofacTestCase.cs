@@ -18,7 +18,7 @@ namespace Xunit.Frameworks.Autofac.TestFramework
                                TestMethodDisplay defaultMethodDisplay,
                                ITestMethod testMethod,
                                object[] testMethodArguments = null)
-            : base(diagnosticMessageSink, defaultMethodDisplay, testMethod, testMethodArguments) { }
+            : base(diagnosticMessageSink, defaultMethodDisplay, TestMethodDisplayOptions.All, testMethod, testMethodArguments) { }
 
         public ILifetimeScope TestClassLifetimeScope { get; set; }
 
