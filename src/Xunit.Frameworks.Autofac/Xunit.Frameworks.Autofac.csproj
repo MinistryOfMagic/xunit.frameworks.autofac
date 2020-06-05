@@ -1,21 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>An xUnit TestFramework that uses Autofac to resolve tests and their dependencies</Description>
+    <Description>An xUnit TestFramework that uses Autofac to resolve tests and their dependencies (for netstandard2.1)</Description>
     <AssemblyTitle>xunit.frameworks.autofac</AssemblyTitle>
     <VersionPrefix>0.2.0</VersionPrefix>
-    <Authors>MinistryOfMagic</Authors>
+    <Authors>AlanBarros</Authors>
     <TargetFrameworks>netstandard2.1;net461</TargetFrameworks>
     <AssemblyName>xunit.frameworks.autofac</AssemblyName>
-    <PackageId>xunit.frameworks.autofac</PackageId>
+    <PackageId>xunit.frameworks.autofac2</PackageId>
     <PackageTags>xunit;autofac</PackageTags>
-    <PackageLicenseUrl>http://www.opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicense>http://www.opensource.org/licenses/MIT</PackageLicense>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/MinistryOfMagic/xunit.frameworks.autofac</RepositoryUrl>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard2.1' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <RepositoryUrl>https://github.com/alanbarros/xunit.frameworks.autofac</RepositoryUrl>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard2.1' ">2.1</NetStandardImplicitPackageVersion>
     <RootNamespace>Xunit.Frameworks.Autofac</RootNamespace>
-    <Version>0.3.0</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
