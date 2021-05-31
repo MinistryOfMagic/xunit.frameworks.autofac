@@ -1,5 +1,7 @@
+using System.Reflection;
 using Autofac;
 using FluentAssertions;
+using Module = Autofac.Module;
 
 namespace Xunit.Frameworks.Autofac.Tests
 {
@@ -32,7 +34,27 @@ namespace Xunit.Frameworks.Autofac.Tests
         {
             input.Should().Be(input);
         }
+
+        private static int _numRuns = 0;
+
+        [Theory]
+        [InlineData("ABC-02-04-CDE")]
+        [InlineData("ABC-02-40-CDE")]
+        [InlineData("ABC-02-0040-CDE")]
+        public void Theories_run_correct_num_times(string input)
+        {
+            var thisTestMethod = MethodInfo.GetCurrentMethod();
+            var inlineDataAttributes = thisTestMethod.GetCustomAttributes(typeof(InlineDataAttribute), false);
+            var numInlineDataItems = inlineDataAttributes.Length;
+
+            input.Should().Be(input);
+
+            _numRuns++;
+            Assert.True(_numRuns <= numInlineDataItems,
+                        $"Theory should only run {numInlineDataItems} times. It has run {_numRuns} times now.");
+        }
     }
+
 
     [CollectionDefinition("Foo")]
     public class FooCollectionDefinition : ICollectionFixture<FooCollectionFixture>, IClassFixture<FooClassFixture> { }
