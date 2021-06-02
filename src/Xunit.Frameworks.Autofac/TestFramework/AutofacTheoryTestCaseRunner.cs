@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -24,6 +25,11 @@ namespace Xunit.Frameworks.Autofac.TestFramework
             : base(testCase, displayName, skipReason, constructorArguments, diagnosticMessageSink, messageBus, aggregator, cancellationTokenSource)
         {
             _testClassLifetimeScope = testClassLifetimeScope;
+        }
+
+        protected override async Task AfterTestCaseStartingAsync()
+        {
+
         }
 
         protected override XunitTestRunner CreateTestRunner(ITest test,
