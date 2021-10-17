@@ -50,8 +50,7 @@ namespace Xunit.Frameworks.Autofac.Tests
             input.Should().Be(input);
 
             _numRuns++;
-            Assert.True(_numRuns <= numInlineDataItems,
-                        $"Theory should only run {numInlineDataItems} times. It has run {_numRuns} times now.");
+            _numRuns.Should().BeLessOrEqualTo(numInlineDataItems, $"Theory should only run {numInlineDataItems} times. It has run {_numRuns} times now.");
         }
     }
 
