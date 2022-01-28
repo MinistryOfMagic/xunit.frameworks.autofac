@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Autofac;
 using FluentAssertions;
+using Module = Autofac.Module;
 
 namespace Xunit.Frameworks.Autofac.Tests
 {
@@ -31,6 +35,46 @@ namespace Xunit.Frameworks.Autofac.Tests
         public void Theories_work_correctly(string input)
         {
             input.Should().Be(input);
+        }
+
+        private static int _numInlineDataTheoryRuns = 0;
+
+        [Theory]
+        [InlineData("ABC-02-04-CDE")]
+        [InlineData("ABC-02-40-CDE")]
+        [InlineData("ABC-02-0040-CDE")]
+        public void Theories_with_InlineData_run_correct_num_times(string input)
+        {
+            var thisTestMethod = MethodBase.GetCurrentMethod();
+            var inlineDataAttributes = thisTestMethod.GetCustomAttributes(typeof(InlineDataAttribute), false);
+            var numInlineDataItems = inlineDataAttributes.Length;
+
+            input.Should().Be(input);
+
+            _numInlineDataTheoryRuns++;
+            Assert.True(_numInlineDataTheoryRuns <= numInlineDataItems,
+                        $"Theory should only run {numInlineDataItems} times. It has run {_numInlineDataTheoryRuns} times now.");
+        }
+
+        public static IEnumerable<object[]> TheoryTestData =>
+            new List<object[]>
+            {
+                new object[]{"Data 1"},
+                new object[]{"Data 2"},
+                new object[]{"Data 3"}
+            };
+
+        private static int _numMemberDataTheoryRuns = 0;
+
+        [Theory]
+        [MemberData(nameof(TheoryTestData))]
+        public void Theories_with_MemberData_run_correct_num_times(string input)
+        {
+            var numMemberDataItems = TheoryTestData.Count();
+            input.Should().Be(input);
+            _numMemberDataTheoryRuns++;
+            Assert.True(_numMemberDataTheoryRuns <= numMemberDataItems,
+                        $"Theory should only run {numMemberDataItems} times. It has run {_numMemberDataTheoryRuns} times now.");
         }
     }
 
