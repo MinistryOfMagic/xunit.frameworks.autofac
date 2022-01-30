@@ -5,7 +5,7 @@
         <AssemblyTitle>xunit.frameworks.autofac</AssemblyTitle>
         <VersionPrefix>0.5.0</VersionPrefix>
         <Authors>MinistryOfMagic</Authors>
-        <TargetFrameworks>netstandard2.1;netstandard2.0;net6.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.1;netstandard2.0;net6.0;net48</TargetFrameworks>
         <AssemblyName>xunit.frameworks.autofac</AssemblyName>
         <PackageId>xunit.frameworks.autofac</PackageId>
         <PackageTags>xunit;autofac</PackageTags>
