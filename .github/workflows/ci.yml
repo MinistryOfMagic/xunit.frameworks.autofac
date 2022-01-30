@@ -47,8 +47,8 @@ jobs:
         working-directory: src
 
       - name: Run tests
-        run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
-        working-directory: src/Xunit.Frameworks.Autofac.Tests
+        run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+        working-directory: src
 
       - name: Publish
         if: startsWith(github.ref, 'refs/heads/release')
