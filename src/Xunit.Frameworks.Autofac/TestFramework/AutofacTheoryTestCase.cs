@@ -29,7 +29,7 @@ internal class AutofacTheoryTestCase : AutofacTestCase
                                               ExceptionAggregator aggregator,
                                               CancellationTokenSource cancellationTokenSource)
     {
-        return new AutofacTheoryTestCaseRunner(this, TestClassLifetimeScope, DisplayName, SkipReason, constructorArguments, diagnosticMessageSink,
+        return new AutofacTheoryTestCaseRunner(this, TestCaseLifetimeScope, DisplayName, SkipReason, constructorArguments, diagnosticMessageSink,
                                                messageBus,
                                                aggregator, cancellationTokenSource).RunAsync();
     }

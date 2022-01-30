@@ -30,9 +30,10 @@ namespace Your.Test.Project
 
         protected override void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<CurrentTestInfo>().As<ICurrentTestInfo>().InstancePerTest();
-            builder.RegisterType<CurrentTestClassInfo>().As<ICurrentTestClassInfo>().InstancePerTestClass();
-            builder.RegisterType<CurrentTestCollectionInfo>().As<ICurrentTestCollectionInfo>().InstancePerTestCollection();
+            builder.RegisterType<CurrentTestInfo>().AsSelf().InstancePerTest();
+            builder.RegisterType<CurrentTheoryInfo>().AsSelf().InstancePerTheory();
+            builder.RegisterType<CurrentTestClassInfo>().AsSelf().InstancePerTestClass();
+            builder.RegisterType<CurrentTestCollectionInfo>().AsSelf().InstancePerTestCollection();
 
             builder.RegisterSource(new NSubstituteRegistrationSource()); // https://gist.github.com/dabide/57c5279894383d8f0ee4ed2069773907
 
@@ -76,7 +77,7 @@ public class Foo : IFoo
 }
 ```
 
-`ICollectionFixture<T>` and `IClassFixture<T>` are also supported, together with `INeedModule<T>`. (The latter specifies Autofac modules to be loaded when the lifetime scope is created.) This enables very elegant solutions:
+`ICollectionFixture<T>`, `IClassFixture<T>`, and `ITheoryFixture<T>` are also supported, together with `INeedModule<T>`. (The latter specifies Autofac modules to be loaded when the lifetime scope is created.) This enables very elegant solutions:
 
 ```cs
 [UseAutofacTestFramework]

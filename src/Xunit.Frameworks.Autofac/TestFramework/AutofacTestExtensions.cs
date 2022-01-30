@@ -42,6 +42,25 @@ internal static class AutofacTestExtensions
         }
     }
 
+    public static void RegisterTheoryFixturesAndModules(this ContainerBuilder builder, ITestClass testClass, IReflectionTypeInfo @class)
+    {
+        foreach (Type fixtureType in @class.Type.GetTypeParametersFromInterfaces(typeof(ITheoryFixture<>)))
+        {
+            builder.RegisterModules(fixtureType);
+            builder.RegisterType(fixtureType).AsSelf().SingleInstance();
+        }
+
+        if (testClass.TestCollection.CollectionDefinition != null)
+        {
+            Type declarationType = ((IReflectionTypeInfo)testClass.TestCollection.CollectionDefinition).Type;
+            foreach (Type fixtureType in declarationType.GetTypeParametersFromInterfaces(typeof(ITheoryFixture<>)))
+            {
+                builder.RegisterModules(fixtureType);
+                builder.RegisterType(fixtureType).AsSelf().SingleInstance();
+            }
+        }
+    }
+
     public static void RegisterModules(this ContainerBuilder builder, Type type)
     {
         foreach (Type moduleType in type.GetTypeParametersFromInterfaces(typeof(INeedModule<>)))

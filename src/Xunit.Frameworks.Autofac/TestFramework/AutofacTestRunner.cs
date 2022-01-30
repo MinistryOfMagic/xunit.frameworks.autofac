@@ -11,9 +11,9 @@ namespace Xunit.Frameworks.Autofac.TestFramework;
 
 public class AutofacTestRunner : XunitTestRunner
 {
-    private readonly ILifetimeScope _testClassLifetimeScope;
+    private readonly ILifetimeScope _testRunnerLifetimeScope;
 
-    public AutofacTestRunner(ILifetimeScope testClassLifetimeScope,
+    public AutofacTestRunner(ILifetimeScope testRunnerLifetimeScope,
                              ITest test,
                              IMessageBus messageBus,
                              Type testClass,
@@ -27,13 +27,13 @@ public class AutofacTestRunner : XunitTestRunner
         : base(test, messageBus, testClass, constructorArguments, testMethod, testMethodArguments, skipReason, beforeAfterAttributes, aggregator,
                cancellationTokenSource)
     {
-        _testClassLifetimeScope = testClassLifetimeScope;
+        _testRunnerLifetimeScope = testRunnerLifetimeScope;
     }
 
     protected override async Task<Tuple<decimal, string>> InvokeTestAsync(ExceptionAggregator aggregator)
     {
         await using ILifetimeScope testLifetimeScope =
-            _testClassLifetimeScope.BeginLifetimeScope(AutofacTestScopes.Test, builder => builder.RegisterModules(TestClass));
+            _testRunnerLifetimeScope.BeginLifetimeScope(AutofacTestScopes.Test, builder => builder.RegisterModules(TestClass));
 
         TestOutputHelper testOutputHelper = testLifetimeScope.Resolve<TestOutputHelper>();
         testOutputHelper.Initialize(MessageBus, Test);
