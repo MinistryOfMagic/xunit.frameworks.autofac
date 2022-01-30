@@ -35,7 +35,8 @@ jobs:
 
       - name: Restore dependencies
         run: nuget restore $SOLUTION
-
+        working-directory: src
+        
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
