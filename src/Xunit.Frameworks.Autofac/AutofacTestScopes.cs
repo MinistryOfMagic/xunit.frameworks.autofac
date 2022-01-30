@@ -1,9 +1,8 @@
-﻿namespace Xunit.Frameworks.Autofac
+﻿namespace Xunit.Frameworks.Autofac;
+
+public struct AutofacTestScopes
 {
-    public struct AutofacTestScopes
-    {
-        public const string TestCollection = "TestCollectionLifetime";
-        public const string TestClass = "TestClassLifetime";
-        public const string Test = "TestLifetime";
-    }
+    public const string TestCollection = "TestCollectionLifetime";
+    public const string TestClass = "TestClassLifetime";
+    public const string Test = "TestLifetime";
 }

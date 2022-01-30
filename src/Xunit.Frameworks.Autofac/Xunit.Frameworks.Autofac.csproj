@@ -1,25 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>An xUnit TestFramework that uses Autofac to resolve tests and their dependencies</Description>
-    <AssemblyTitle>xunit.frameworks.autofac</AssemblyTitle>
-    <VersionPrefix>0.1.0</VersionPrefix>
-    <Authors>MinistryOfMagic</Authors>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;net5.0</TargetFrameworks>
-    <AssemblyName>xunit.frameworks.autofac</AssemblyName>
-    <PackageId>xunit.frameworks.autofac</PackageId>
-    <PackageTags>xunit;autofac</PackageTags>
-    <PackageLicenseUrl>http://www.opensource.org/licenses/MIT</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/MinistryOfMagic/xunit.frameworks.autofac</RepositoryUrl>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <RootNamespace>Xunit.Frameworks.Autofac</RootNamespace>
-    <Version>0.4.0</Version>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Description>An xUnit TestFramework that uses Autofac to resolve tests and their dependencies</Description>
+        <AssemblyTitle>xunit.frameworks.autofac</AssemblyTitle>
+        <VersionPrefix>0.5.0</VersionPrefix>
+        <Authors>MinistryOfMagic</Authors>
+        <TargetFrameworks>netstandard2.1;netstandard2.0;net6.0</TargetFrameworks>
+        <AssemblyName>xunit.frameworks.autofac</AssemblyName>
+        <PackageId>xunit.frameworks.autofac</PackageId>
+        <PackageTags>xunit;autofac</PackageTags>
+        <PackageLicenseUrl>https://www.opensource.org/licenses/MIT</PackageLicenseUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/MinistryOfMagic/xunit.frameworks.autofac</RepositoryUrl>
+        <RootNamespace>Xunit.Frameworks.Autofac</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.1.0" />
-    <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+        <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
+    </ItemGroup>
 
 </Project>

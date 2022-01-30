@@ -6,54 +6,54 @@ using Autofac;
 using Autofac.Core;
 using Xunit.Abstractions;
 
-namespace Xunit.Frameworks.Autofac.TestFramework
+namespace Xunit.Frameworks.Autofac.TestFramework;
+
+internal static class AutofacTestExtensions
 {
-    internal static class AutofacTestExtensions
+    public static void RegisterCollectionFixturesAndModules(this ContainerBuilder builder, ITestCollection testCollection)
     {
-        public static void RegisterCollectionFixturesAndModules(this ContainerBuilder builder, ITestCollection testCollection)
+        if (testCollection.CollectionDefinition == null) return;
+
+        Type declarationType = ((IReflectionTypeInfo)testCollection.CollectionDefinition).Type;
+        builder.RegisterModules(declarationType);
+        foreach (Type fixtureType in declarationType.GetTypeParametersFromInterfaces(typeof(ICollectionFixture<>)))
         {
-            if (testCollection.CollectionDefinition != null)
-            {
-                var declarationType = ((IReflectionTypeInfo) testCollection.CollectionDefinition).Type;
-                builder.RegisterModules(declarationType);
-                foreach (var fixtureType in declarationType.GetTypeParametersFromInterfaces(typeof(ICollectionFixture<>)))
-                {
-                    builder.RegisterModules(fixtureType);
-                    builder.RegisterType(fixtureType).AsSelf().SingleInstance();
-                }
-            }
+            builder.RegisterModules(fixtureType);
+            builder.RegisterType(fixtureType).AsSelf().SingleInstance();
+        }
+    }
+
+    public static void RegisterClassFixturesAndModules(this ContainerBuilder builder, ITestClass testClass, IReflectionTypeInfo @class)
+    {
+        foreach (Type fixtureType in @class.Type.GetTypeParametersFromInterfaces(typeof(IClassFixture<>)))
+        {
+            builder.RegisterModules(fixtureType);
+            builder.RegisterType(fixtureType).AsSelf().SingleInstance();
         }
 
-        public static void RegisterClassFixturesAndModules(this ContainerBuilder builder, ITestClass testClass, IReflectionTypeInfo @class)
+        if (testClass.TestCollection.CollectionDefinition != null)
         {
-            foreach (var fixtureType in @class.Type.GetTypeParametersFromInterfaces(typeof(IClassFixture<>)))
+            Type declarationType = ((IReflectionTypeInfo)testClass.TestCollection.CollectionDefinition).Type;
+            foreach (Type fixtureType in declarationType.GetTypeParametersFromInterfaces(typeof(IClassFixture<>)))
             {
                 builder.RegisterModules(fixtureType);
                 builder.RegisterType(fixtureType).AsSelf().SingleInstance();
             }
-
-            if (testClass.TestCollection.CollectionDefinition != null)
-            {
-                var declarationType = ((IReflectionTypeInfo) testClass.TestCollection.CollectionDefinition).Type;
-                foreach (var fixtureType in declarationType.GetTypeParametersFromInterfaces(typeof(IClassFixture<>)))
-                {
-                    builder.RegisterModules(fixtureType);
-                    builder.RegisterType(fixtureType).AsSelf().SingleInstance();
-                }
-            }
         }
+    }
 
-        public static void RegisterModules(this ContainerBuilder builder, Type type)
+    public static void RegisterModules(this ContainerBuilder builder, Type type)
+    {
+        foreach (Type moduleType in type.GetTypeParametersFromInterfaces(typeof(INeedModule<>)))
         {
-            foreach (var moduleType in type.GetTypeParametersFromInterfaces(typeof(INeedModule<>)))
-                builder.RegisterModule((IModule) Activator.CreateInstance(moduleType));
+            builder.RegisterModule((IModule)Activator.CreateInstance(moduleType));
         }
+    }
 
-        public static IEnumerable<Type> GetTypeParametersFromInterfaces(this Type declarationType, Type genericInterfaceType)
-        {
-            return declarationType.GetTypeInfo()
-                                  .ImplementedInterfaces.Where(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == genericInterfaceType)
-                                  .Select(interfaceType => interfaceType.GenericTypeArguments.Single());
-        }
+    public static IEnumerable<Type> GetTypeParametersFromInterfaces(this Type declarationType, Type genericInterfaceType)
+    {
+        return declarationType.GetTypeInfo()
+                              .ImplementedInterfaces.Where(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == genericInterfaceType)
+                              .Select(interfaceType => interfaceType.GenericTypeArguments.Single());
     }
 }
