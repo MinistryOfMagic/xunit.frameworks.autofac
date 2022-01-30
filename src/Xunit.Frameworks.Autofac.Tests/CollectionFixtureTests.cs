@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using Autofac;
 using FluentAssertions;
 using JetBrains.Annotations;
@@ -26,9 +23,9 @@ public class CollectionFixtureTests : ITheoryFixture<FooTheoryFixture>
     public static IEnumerable<object[]> TheoryTestData =>
         new List<object[]>
         {
-            new object[] { "Data 1" },
-            new object[] { "Data 2" },
-            new object[] { "Data 3" }
+            new object[] { 1 },
+            new object[] { 2 },
+            new object[] { 3 }
         };
 
     [Fact]
@@ -47,7 +44,7 @@ public class CollectionFixtureTests : ITheoryFixture<FooTheoryFixture>
     {
         number.Should().Be(number);
         FooTheoryFixture _ = _lifetimeScope.Resolve<FooTheoryFixture>();
-        FooTheoryFixture.InstantiationCount.Should().Be(1, "The injected instance should be the same for all tests in the theory");
+        FooTheoryFixture.InstantiationCount.Should().Be(1, "the injected instance should be the same for all tests in the theory");
     }
 
     [Theory]
@@ -58,53 +55,33 @@ public class CollectionFixtureTests : ITheoryFixture<FooTheoryFixture>
     {
         number.Should().Be(number);
         TheoryRunCounter _ = _lifetimeScope.Resolve<TheoryRunCounter>();
-        TheoryRunCounter.InstantiationCount.Should().Be(1, "The injected instance should be the same for all tests in the theory");
+        TheoryRunCounter.InstantiationCount.Should().Be(1, "the injected instance should be the same for all tests in the theory");
     }
 
     [Theory]
-    [InlineData("ABC-02-04-CDE")]
-    [InlineData("ABC-02-40-CDE")]
-    [InlineData("ABC-02-0040-CDE")]
-    public void Theories_work_correctly(string input)
-    {
-        input.Should().Be(input);
-    }
-
-    [Theory]
-    [InlineData("ABC-02-04-CDE")]
-    [InlineData("ABC-02-40-CDE")]
-    [InlineData("ABC-02-0040-CDE")]
-    public void Theories_with_InlineData_run_correct_num_times(string input)
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    public void Theories_with_InlineData_run_correct_num_times(int testId)
     {
         RunCounter runCounter = _lifetimeScope.Resolve<RunCounter>();
 
-        MethodBase thisTestMethod = MethodBase.GetCurrentMethod();
-        Debug.Assert(thisTestMethod != null, nameof(thisTestMethod) + " != null");
-        object[] inlineDataAttributes = thisTestMethod.GetCustomAttributes(typeof(InlineDataAttribute), false);
-        int numInlineDataItems = inlineDataAttributes.Length;
-
-        input.Should().Be(input);
-
-        runCounter.Count++;
-        runCounter.Count.Should().BeLessOrEqualTo(numInlineDataItems,
-                    $"Theory should only run {numInlineDataItems} times. It has run {runCounter.Count} times now.");
+        runCounter.HasRun(testId);
+        runCounter.GetRuns(testId).Should().Be(1, "a theory test case should only run once");
     }
 
     [Theory]
     [MemberData(nameof(TheoryTestData))]
-    public void Theories_with_MemberData_run_correct_num_times(string input)
+    public void Theories_with_MemberData_run_correct_num_times(int testId)
     {
         RunCounter runCounter = _lifetimeScope.Resolve<RunCounter>();
 
-        int numMemberDataItems = TheoryTestData.Count();
-        input.Should().Be(input);
-        runCounter.Count++;
-        runCounter.Count.Should().BeLessOrEqualTo(numMemberDataItems,
-                    $"Theory should only run {numMemberDataItems} times. It has run {runCounter.Count} times now.");
+        runCounter.HasRun(testId);
+        runCounter.GetRuns(testId).Should().Be(1, "a theory test case should only run once");
     }
 }
 
-[UsedImplicitly]
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class FooTheoryFixture
 {
     public FooTheoryFixture()
@@ -115,6 +92,7 @@ public class FooTheoryFixture
     public static int InstantiationCount { get; set; }
 }
 
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class TheoryRunCounter
 {
     public TheoryRunCounter()
@@ -127,7 +105,27 @@ public class TheoryRunCounter
 
 public class RunCounter
 {
-    public int Count { get; set; }
+    private readonly Dictionary<int, int> _runs = new();
+
+    public void HasRun(int testId)
+    {
+        if (!_runs.ContainsKey(testId))
+        {
+            _runs.Add(testId, 0);
+        }
+
+        _runs[testId]++;
+    }
+
+    public int GetRuns(int testId)
+    {
+        if (!_runs.ContainsKey(testId))
+        {
+            _runs.Add(testId, 0);
+        }
+
+        return _runs[testId];
+    }
 }
 
 [CollectionDefinition("Foo")]
