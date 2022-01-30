@@ -36,7 +36,7 @@ jobs:
       - name: Restore dependencies
         run: nuget restore $SOLUTION
         working-directory: src
-        
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
@@ -48,7 +48,7 @@ jobs:
 
       - name: Run tests
         run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
-        working-directory: src
+        working-directory: src/Xunit.Frameworks.Autofac.Tests
 
       - name: Publish
         if: startsWith(github.ref, 'refs/heads/release')
