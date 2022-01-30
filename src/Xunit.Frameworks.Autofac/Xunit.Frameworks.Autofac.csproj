@@ -9,12 +9,17 @@
         <AssemblyName>xunit.frameworks.autofac</AssemblyName>
         <PackageId>xunit.frameworks.autofac</PackageId>
         <PackageTags>xunit;autofac</PackageTags>
-        <PackageLicenseUrl>https://www.opensource.org/licenses/MIT</PackageLicenseUrl>
+        <PackageLicense>MIT</PackageLicense>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/MinistryOfMagic/xunit.frameworks.autofac</RepositoryUrl>
         <RootNamespace>Xunit.Frameworks.Autofac</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../README.md" Pack="true" PackagePath="/"/>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Autofac" Version="6.3.0" />
