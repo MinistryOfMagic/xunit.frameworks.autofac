@@ -13,6 +13,7 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/MinistryOfMagic/xunit.frameworks.autofac</RepositoryUrl>
         <RootNamespace>Xunit.Frameworks.Autofac</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
