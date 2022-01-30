@@ -43,13 +43,13 @@ jobs:
 
       - name: Build
         run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION --no-restore
-        workdir: src
+        working-directory: src
 
       - name: Run tests
         run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
-        workdir: src
+        working-directory: src
 
       - name: Publish
         if: startsWith(github.ref, 'refs/heads/release')
         run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
-        workdir: src
+        working-directory: src
