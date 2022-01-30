@@ -58,7 +58,7 @@ internal class AutofacSkippedDataRowTestCase : AutofacTestCase
                                                     CancellationTokenSource cancellationTokenSource)
     {
         return await new AutofacTheoryTestCaseRunner(
-            this, TestClassLifetimeScope, DisplayName, SkipReason, constructorArguments, diagnosticMessageSink,
+            this, TestCaseLifetimeScope, DisplayName, SkipReason, constructorArguments, diagnosticMessageSink,
             messageBus,
             aggregator, cancellationTokenSource).RunAsync();
     }

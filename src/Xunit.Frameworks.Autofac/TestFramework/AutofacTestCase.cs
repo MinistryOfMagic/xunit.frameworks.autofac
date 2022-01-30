@@ -26,7 +26,7 @@ public class AutofacTestCase : XunitTestCase
     {
     }
 
-    public ILifetimeScope TestClassLifetimeScope { get; set; }
+    public ILifetimeScope TestCaseLifetimeScope { get; set; }
 
     public override Task<RunSummary> RunAsync(IMessageSink diagnosticMessageSink,
                                               IMessageBus messageBus,
@@ -34,7 +34,7 @@ public class AutofacTestCase : XunitTestCase
                                               ExceptionAggregator aggregator,
                                               CancellationTokenSource cancellationTokenSource)
     {
-        return new AutofacTestCaseRunner(this, TestClassLifetimeScope, DisplayName, SkipReason, constructorArguments, TestMethodArguments, messageBus,
+        return new AutofacTestCaseRunner(this, TestCaseLifetimeScope, DisplayName, SkipReason, constructorArguments, TestMethodArguments, messageBus,
                                          aggregator,
                                          cancellationTokenSource).RunAsync();
     }

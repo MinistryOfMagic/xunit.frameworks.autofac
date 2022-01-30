@@ -10,9 +10,9 @@ namespace Xunit.Frameworks.Autofac.TestFramework;
 
 public class AutofacTestClassRunner : XunitTestClassRunner
 {
-    private readonly ILifetimeScope _testClassLifetimeScope;
+    private readonly ILifetimeScope _testRunnerLifetimeScope;
 
-    public AutofacTestClassRunner(ILifetimeScope testClassLifetimeScope,
+    public AutofacTestClassRunner(ILifetimeScope testRunnerLifetimeScope,
                                   ITestClass testClass,
                                   IReflectionTypeInfo @class,
                                   IEnumerable<IXunitTestCase> testCases,
@@ -25,12 +25,12 @@ public class AutofacTestClassRunner : XunitTestClassRunner
         : base(testClass, @class, testCases, diagnosticMessageSink, messageBus, testCaseOrderer, aggregator, cancellationTokenSource,
                collectionFixtureMappings)
     {
-        _testClassLifetimeScope = testClassLifetimeScope;
+        _testRunnerLifetimeScope = testRunnerLifetimeScope;
     }
 
     protected override void CreateClassFixture(Type fixtureType)
     {
-        Aggregator.Run(() => { ClassFixtureMappings[fixtureType] = _testClassLifetimeScope.Resolve(fixtureType); });
+        Aggregator.Run(() => { ClassFixtureMappings[fixtureType] = _testRunnerLifetimeScope.Resolve(fixtureType); });
     }
 
     protected override async Task<RunSummary> RunTestMethodAsync(ITestMethod testMethod,
@@ -38,12 +38,13 @@ public class AutofacTestClassRunner : XunitTestClassRunner
                                                                  IEnumerable<IXunitTestCase> testCases,
                                                                  object[] constructorArguments)
     {
-        return await new AutofacTestMethodRunner(_testClassLifetimeScope, DiagnosticMessageSink, testMethod, Class, method, testCases, MessageBus,
+        await using ILifetimeScope theoryLifetimeScope = _testRunnerLifetimeScope.BeginLifetimeScope(AutofacTestScopes.Theory, builder => builder.RegisterTheoryFixturesAndModules(testMethod.TestClass, Class));
+        return await new AutofacTestMethodRunner(theoryLifetimeScope, DiagnosticMessageSink, testMethod, Class, method, testCases, MessageBus,
                                                  new ExceptionAggregator(Aggregator), CancellationTokenSource, constructorArguments).RunAsync();
     }
 
     protected override object[] CreateTestClassConstructorArguments()
     {
-        return new object[0];
+        return Array.Empty<object>();
     }
-}
+ }

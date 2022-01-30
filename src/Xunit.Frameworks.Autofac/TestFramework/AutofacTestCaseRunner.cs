@@ -10,10 +10,10 @@ namespace Xunit.Frameworks.Autofac.TestFramework;
 
 public class AutofacTestCaseRunner : XunitTestCaseRunner
 {
-    private readonly ILifetimeScope _testClassLifetimeScope;
+    private readonly ILifetimeScope _testRunnerLifetimeScope;
 
     public AutofacTestCaseRunner(IXunitTestCase testCase,
-                                 ILifetimeScope testClassLifetimeScope,
+                                 ILifetimeScope testRunnerLifetimeScope,
                                  string displayName,
                                  string skipReason,
                                  object[] constructorArguments,
@@ -23,7 +23,7 @@ public class AutofacTestCaseRunner : XunitTestCaseRunner
                                  CancellationTokenSource cancellationTokenSource)
         : base(testCase, displayName, skipReason, constructorArguments, testMethodArguments, messageBus, aggregator, cancellationTokenSource)
     {
-        _testClassLifetimeScope = testClassLifetimeScope;
+        _testRunnerLifetimeScope = testRunnerLifetimeScope;
     }
 
     protected override XunitTestRunner CreateTestRunner(ITest test,
@@ -38,12 +38,12 @@ public class AutofacTestCaseRunner : XunitTestCaseRunner
                                                         CancellationTokenSource cancellationTokenSource)
     {
         return new AutofacTestRunner(
-            _testClassLifetimeScope, test, messageBus, testClass, constructorArguments, testMethod, testMethodArguments, skipReason, beforeAfterAttributes,
+            _testRunnerLifetimeScope, test, messageBus, testClass, constructorArguments, testMethod, testMethodArguments, skipReason, beforeAfterAttributes,
             new ExceptionAggregator(aggregator), cancellationTokenSource);
     }
 
     protected override ITest CreateTest(IXunitTestCase testCase, string displayName)
     {
-        return new AutofacTest(_testClassLifetimeScope, testCase, displayName);
+        return new AutofacTest(_testRunnerLifetimeScope, testCase, displayName);
     }
 }
