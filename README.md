@@ -1,14 +1,12 @@
-xUnit Autofac
-================
+# xUnit Autofac
 
 Use Autofac to resolve xUnit test cases.
 
 The Test runners and discoverers are based on their xUnit counterparts. If `[UseAutofacTestFramework]` is missing, the tests in that class are run by the normal xUnit runners.
 
-Originally a fork of [xunit.ioc.autofac] by @dennisroche
+Originally a fork of [xunit.ioc.autofac](https://github.com/dennisroche/xunit.ioc.autofac) by @dennisroche
 
-How to use
-=============
+## How to use
 
 Install the [Nuget](https://www.nuget.org/packages/xunit.frameworks.autofac) package.
 
@@ -132,6 +130,5 @@ public class MemoryDatabaseClassFixture : IDisposable, INeedModule<MemoryDatabas
 
 ```
 
-License
-=============
+## License
 MIT
